@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int calcularHash(char string[], int linha) {
+    int valorHash = 0;
+    int i;
+    int posicaoAlfabeto;
+
+    for (i = 0; i < strlen(string); i++) {
+        posicaoAlfabeto = string[i] - 'A';
+        valorHash += posicaoAlfabeto + i + linha;
+    }
+
+    return valorHash;
+}
+
+int main() {
+    int numCasosTeste;
+    scanf("%d", &numCasosTeste);
+
+    int i;
+    for (i = 0; i < numCasosTeste; i++) {
+        int numLinhas;
+        scanf("%d", &numLinhas);
+
+        int j;
+        char string[51];
+        int valorHash = 0;
+
+        for (j = 0; j < numLinhas; j++) {
+            scanf("%s", string);
+            valorHash += calcularHash(string, j);
+        }
+
+        printf("%d\n", valorHash);
+    }
+
+    return 0;
+}
