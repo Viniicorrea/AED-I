@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <string.h>
+
+
+#define MAX 500
+
+int booyermoore(char *nome, int n, char *carta, int m){
+  
+//pré-processamento da palavra
+  
+  int alfabeto[256], i, pos, r, ocorrs = 0;
+
+  for(i = 0; i < 256; i++){
+
+    alfabeto[i] = m;
+    
+  }
+
+  for(i = 1; i < m; i++){
+
+    alfabeto[nome[i - 1]] = m - i;
+    
+  }
+
+  pos = m;
+
+  while(pos <= n){
+
+    r = 1;
+    
+    while(r <= n && nome[m - r] == carta[pos - r]) r++;
+
+    if (pos == n){//chegou no final da carta
+
+      pos++;
+      
+    }
+    
+    if (r > m){//encontrou a palavra
+
+      ocorrs++;
+      
+    }
+
+    else{//avanca casas
+
+      pos += alfabeto[carta[pos - r]];
+      
+    }
+  }
+
+  return ocorrs;
+  
+}
+
+int main(){
+
+  char nome[] = "zelda";
+  char carta[MAX];
+  int ocorrs;
+
+  int m = strlen(nome);
+
+
+  scanf("%s",carta);
+  
+  int n = strlen(carta);
+  
+  printf("%s\n", carta);
+
+  ocorrs = booyermoore(nome, n, carta, m);
+
+  printf("%d\n", ocorrs);
+
+  if(ocorrs > 0){
+    
+    printf("Link Bolado");
+    
+  }
+  else{
+
+    printf("Link Tranquilo");
+    
+  }
+
+  return 0;
+  
+}
