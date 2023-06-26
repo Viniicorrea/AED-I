@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_WIDTH 100
+#define MAX_HEIGHT 100
+
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+typedef struct {
+    int width;
+    int height;
+    char map[MAX_HEIGHT][MAX_WIDTH];
+} Map;
+
+// Função para verificar se um ponto está dentro dos limites do mapa
+bool isPointValid(Point p, int width, int height) {
+    return (p.x >= 0 && p.x < width && p.y >= 0 && p.y < height);
+}
+
+// Função para verificar se o mapa é válido
+bool isMapValid(Map map) {
+    int width = map.width;
+    int height = map.height;
+    char (*grid)[MAX_WIDTH] = map.map; // Ponteiro para o início do array de caracteres
+
+    bool foundTreasure = false;
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Point current = {x, y};
+
+            switch (grid[y][x]) {
+                case '>':
+                    for (int i = x + 1; i < width; i++) {
+                        if (grid[y][i] == '*') {
+                            foundTreasure = true;
+                            break;
+                        }
+                    }
+                    break;
+                case '<':
+                    for (int i = x - 1; i >= 0; i--) {
+                        if (grid[y][i] == '*') {
+                            foundTreasure = true;
+                            break;
+                        }
+                    }
+                    break;
+                case 'v':
+                    for (int i = y + 1; i < height; i++) {
+                        if (grid[i][x] == '*') {
+                            foundTreasure = true;
+                            break;
+                        }
+                    }
+                    break;
+                case '^':
+                    for (int i = y - 1; i >= 0; i--) {
+                        if (grid[i][x] == '*') {
+                            foundTreasure = true;
+                            break;
+                        }
+                    }
+                    break;
+                case '.':
+                    // Terreno atravessável, não é necessário fazer nada
+                    break;
+                case '*':
+                    break;
+                default:
+                    return false; // Caractere inválido encontrado
+            }
+
+            if (!isPointValid(current, width, height))
+                return false;
+        }
+    }
+
+    return foundTreasure;
+}
+
+int main() {
+    Map map;
+    scanf("%d", &map.width);
+    scanf("%d", &map.height);
+
+    for (int y = 0; y < map.height; y++)
+        scanf("%s", map.map[y]);
+
+    if (isMapValid(map))
+        printf("*\n");
+    else
+        printf("!\n");
+
+    return 0;
+}
