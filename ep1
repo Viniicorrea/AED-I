@@ -1,0 +1,125 @@
+#include <stdio.h>
+
+#define n 10
+
+int nreserva = 0, nremove = 0;
+
+struct lista{
+
+  int ultimo;
+  int tamanhoLista;
+  int lista[n];
+
+};
+typedef struct lista tipoLista;
+
+void inicializaLista (tipoLista *listaAux)
+{
+  int i;
+  
+  listaAux->tamanhoLista = 0;
+  
+  for (i = 0; i < n; i++){
+    
+    listaAux->lista[i] = 0;
+    listaAux->ultimo = 0;
+    
+  }
+}
+
+int main(void) {
+  
+  int i, Ncomandos, comando, remove, k, cont = 0;
+  tipoLista lista;
+
+  scanf("%d", &Ncomandos);
+
+  inicializaLista(&lista);
+
+
+  while(Ncomandos > 0){
+
+    scanf("%d", &comando);
+
+    switch(comando){
+
+      case 1:
+
+        if(lista.tamanhoLista == 10){
+
+          printf("Lista de reserva cheia\n");
+          
+          nreserva--;
+          
+        }
+        else{
+          
+          lista.tamanhoLista++;
+        
+          scanf("%d", &lista.lista[lista.tamanhoLista-1]);
+
+          lista.ultimo = lista.tamanhoLista-1;
+
+          printf("Sua reserva foi realizada\n");
+          
+        }
+
+
+        nreserva++;
+
+        break;
+
+      case 2:
+
+        scanf("%d", &remove);
+
+        
+
+        for(i = 0; i < lista.tamanhoLista; i++){
+
+          if(lista.lista[i] == remove){
+
+            cont = -1;
+
+            lista.lista[i] = 0;
+            lista.tamanhoLista--;
+            nremove++;
+
+            for(k = i; k < n; k++){
+
+              lista.lista[k] = lista.lista[k+1];
+              
+            }
+            lista.tamanhoLista--;
+            lista.tamanhoLista++;
+          }
+          else{
+            
+            cont++;
+            
+          }
+        }
+
+        if(cont++ >= lista.tamanhoLista){
+
+          printf("Voce nao possui reserva desse livro\n");
+        }
+        else{
+
+          printf("O livro foi retirado com sucesso\n");
+          
+        }
+        
+        break;
+               
+    }
+
+    Ncomandos--;
+
+  }
+
+  printf("Voce realizou %d reservas e %d retiradas\n", nreserva, nremove);
+  
+  return 0;
+  
+}
