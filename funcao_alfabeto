@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int obterPosicaoNoAlfabeto(char caractere) {
+    int posicao = caractere - 'A';
+    return posicao;
+}
+
+int main() {
+    char caractere;
+    printf("Digite um caractere maiúsculo: ");
+    scanf(" %c", &caractere);
+
+    int posicao = obterPosicaoNoAlfabeto(caractere);
+    printf("A posição no alfabeto é: %d\n", posicao);
+
+    return 0;
+}
