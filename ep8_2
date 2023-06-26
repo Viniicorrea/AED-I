@@ -1,0 +1,28 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 1000
+
+int main(void) {
+
+  char carta[MAX], nome[] = "zelda";
+
+  int i;
+
+  fgets(carta, sizeof(carta), stdin);
+
+  for (i = 0; i < strlen(carta); i++) {
+
+    carta[i] = tolower(carta[i]);
+  }
+
+  if (strstr(carta, nome) != NULL)
+
+    printf("Link Bolado\n");
+
+  else
+    printf("Link Tranquilo\n");
+
+  return 0;
+}
